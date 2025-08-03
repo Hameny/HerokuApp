@@ -5,14 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Task2 {
+public class Task3 {
 
   @Test
   public void checkingCheckboxes() {
-
     ChromeOptions options = new ChromeOptions();
     HashMap<String, Object> chromePrefs = new HashMap<>();
     chromePrefs.put("credentials_enable_service", false);
@@ -23,21 +23,27 @@ public class Task2 {
     options.addArguments("--start-maximized");//максимальный экран
     options.addArguments("--incognito");//инкогнито
     options.addArguments("--disable-notification");//убрать уведомленияя
-    //options.addArguments("--headless");//без открытия интерфейса
+    options.addArguments("--headless");//без открытия интерфейса
     WebDriver driver = new ChromeDriver(options);
 
-    driver.get("http://the-internet.herokuapp.com/checkboxes");
+    driver.get("http://the-internet.herokuapp.com/dropdown");
 
-    List<WebElement> checkboxes = driver.findElements(By.cssSelector("[type=checkbox]"));
-    WebElement firstCheckbox = checkboxes.get(0);
-    WebElement secondCheckbox = checkboxes.get(1);
+    WebElement dropdownElement = driver.findElement(By.id("dropdown"));
+    Select dropdown = new Select(dropdownElement);
+    List<WebElement> dropdownOptions = dropdown.getOptions();
 
-    Assert.assertFalse(firstCheckbox.isSelected());
-    firstCheckbox.click();
-    Assert.assertTrue(firstCheckbox.isSelected());
-    Assert.assertTrue(secondCheckbox.isSelected());
-    secondCheckbox.click();
-    Assert.assertFalse(secondCheckbox.isSelected());
+    Assert.assertEquals(dropdownOptions.size(), 3);
+
+    dropdown.selectByIndex(1);
+    WebElement selectedOptionFirst = dropdown.getFirstSelectedOption();
+
+    Assert.assertEquals(selectedOptionFirst.getText(), "Option 1");
+
+    dropdown.selectByIndex(2);
+    WebElement selectedOptionSecond = dropdown.getFirstSelectedOption();
+
+    Assert.assertEquals(selectedOptionSecond.getText(), "Option 2");
+
     driver.quit();
   }
 }

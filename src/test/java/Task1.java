@@ -10,9 +10,9 @@ import org.testng.annotations.Test;
 
 public class Task1 {
 
-
   @Test
   public void seleniumTest() {
+
     ChromeOptions options = new ChromeOptions();
     HashMap<String, Object> chromePrefs = new HashMap<>();
     chromePrefs.put("credentials_enable_service", false);
