@@ -8,8 +8,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class Task3 {
+
+  SoftAssert softAssert = new SoftAssert();
 
   @Test
   public void checkingCheckboxes() {
@@ -37,12 +40,13 @@ public class Task3 {
     dropdown.selectByIndex(1);
     WebElement selectedOptionFirst = dropdown.getFirstSelectedOption();
 
-    Assert.assertEquals(selectedOptionFirst.getText(), "Option 1");
+    softAssert.assertEquals(selectedOptionFirst.getText(), "Option 1");
 
     dropdown.selectByIndex(2);
     WebElement selectedOptionSecond = dropdown.getFirstSelectedOption();
 
-    Assert.assertEquals(selectedOptionSecond.getText(), "Option 2");
+    softAssert.assertEquals(selectedOptionSecond.getText(), "Option 2");
+    softAssert.assertAll();
 
     driver.quit();
   }

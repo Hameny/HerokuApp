@@ -7,8 +7,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class Task2 {
+
+  SoftAssert softAssert = new SoftAssert();
 
   @Test
   public void checkingCheckboxes() {
@@ -32,12 +35,14 @@ public class Task2 {
     WebElement firstCheckbox = checkboxes.get(0);
     WebElement secondCheckbox = checkboxes.get(1);
 
-    Assert.assertFalse(firstCheckbox.isSelected());
+    softAssert.assertFalse(firstCheckbox.isSelected());
     firstCheckbox.click();
-    Assert.assertTrue(firstCheckbox.isSelected());
-    Assert.assertTrue(secondCheckbox.isSelected());
+    softAssert.assertTrue(firstCheckbox.isSelected());
+    softAssert.assertTrue(secondCheckbox.isSelected());
     secondCheckbox.click();
-    Assert.assertFalse(secondCheckbox.isSelected());
+    softAssert.assertFalse(secondCheckbox.isSelected());
+    softAssert.assertAll();
+
     driver.quit();
   }
 }
