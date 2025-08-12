@@ -7,8 +7,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class Task4 {
+
+  SoftAssert softAssert = new SoftAssert();
 
   @Test
   public void checkingCheckboxes() {
@@ -36,14 +39,15 @@ public class Task4 {
     int valueAfterUpInt = Integer.parseInt(valueAfterUp);
     int expectedValueAfterUp = Integer.parseInt(testValues) + 1;
 
-    Assert.assertEquals(valueAfterUpInt, expectedValueAfterUp);
+    softAssert.assertEquals(valueAfterUpInt, expectedValueAfterUp);
 
     input.sendKeys(Keys.ARROW_DOWN);
     String valueAfterDown = input.getAttribute("value");
     int valueAfterDownInt = Integer.parseInt(valueAfterDown);
     int expectedValueAfterDown = expectedValueAfterUp - 1;
 
-    Assert.assertEquals(valueAfterDownInt, expectedValueAfterDown);
+    softAssert.assertEquals(valueAfterDownInt, expectedValueAfterDown);
+    softAssert.assertAll();
 
     driver.quit();
   }
